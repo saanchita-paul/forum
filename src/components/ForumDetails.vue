@@ -55,7 +55,7 @@
         </div>
       </div>
 
-      <div class="pt-7" v-if="showCommentInput">
+      <div class="pt-7">
         <h3>Add Comment</h3>
         <v-text-field density="compact" variant="outlined" v-model="newComment" label="Comment"></v-text-field>
         <v-btn color="primary" @click="submitComment">Submit</v-btn>

@@ -27,16 +27,30 @@
     </v-app-bar>
 
     <v-main>
-      <!--  -->
+      <router-view></router-view>
     </v-main>
-    <router-view></router-view>
+    <v-snackbar position="relative"
+        v-model="showNotification"
+        :timeout="timeout"
+    >
+      {{ text }}
+
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
-import AuthService from "../services/AuthService.js";
+import AuthService, {getAuthUser} from "../services/AuthService.js";
 
 export default {
+  mounted() {
+    const user = getAuthUser()
+    Echo.private('App.Models.User.' + user.id)
+        .notification((notification) => {
+          console.log(notification);
+          this.showNotification = true;
+        });
+  },
   methods:{
     ForumList() {
       this.$router.push({
@@ -48,7 +62,12 @@ export default {
       await AuthService.logout();
     }
   },
-  data: () => ({ drawer: null }),
+  data: () => ({
+    showNotification: false,
+    text: 'You have a new comment!',
+    timeout: 10000,
+    drawer: null
+  }),
 }
 </script>
 

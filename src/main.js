@@ -13,7 +13,10 @@ import router from "./router/index.js";
 import {authUser} from "./services/AuthService.js";
 import store from "./store/index.js";
 import axios from "axios";
-import './plugins/Axios'
+import './plugins/Axios';
+import './plugins/Echo';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
 
 axios.defaults.withCredentials = true;
@@ -41,5 +44,6 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 authUser().finally(() =>{
+
     app.use(vuetify).use(router).use(store).mount('#app')
 })
